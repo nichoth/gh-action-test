@@ -11,9 +11,9 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
+    # strategy is omitted in fission
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
@@ -21,6 +21,10 @@ jobs:
         # https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
